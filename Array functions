@@ -1,0 +1,163 @@
+#include <stdio.h>
+
+void traverse(int a[], int n) {
+    printf("\nCurrent Array:\n");
+    for (int i = 0; i < n; i++) {
+        printf("a[%d] = %d\n", i, a[i]);
+    }
+}
+
+void insert_end(int a[], int *n) {
+    int x;
+    printf("Enter the element: ");
+    scanf("%d", &x);
+    a[*n] = x;
+    (*n)++;
+}
+
+void insert_beg(int a[], int *n) {
+    int x;
+    printf("Enter the element: ");
+    scanf("%d", &x);
+    for (int i = *n - 1; i >= 0; i--) {
+        a[i + 1] = a[i];
+    }
+    a[0] = x;
+    (*n)++;
+}
+
+void insert_any(int a[], int *n) {
+    int x, pos;
+    printf("Enter the element: ");
+    scanf("%d", &x);
+    printf("Enter the position (1-%d): ", *n + 1);
+    scanf("%d", &pos);
+
+    if (pos < 1 || pos > *n + 1) {
+        printf("Invalid position!\n");
+        return;
+    }
+
+    for (int i = *n - 1; i >= pos - 1; i--) {
+        a[i + 1] = a[i];
+    }
+    a[pos - 1] = x;
+    (*n)++;
+}
+
+void delete_end(int a[], int *n) {
+    if (*n <= 0) {
+        printf("Array is empty!\n");
+        return;
+    }
+    (*n)--;
+}
+
+void delete_beg(int a[], int *n) {
+    if (*n <= 0) {
+        printf("Array is empty!\n");
+        return;
+    }
+    for (int i = 0; i < *n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+    (*n)--;
+}
+
+void delete_any(int a[], int *n) {
+    int pos;
+    printf("Enter the position (1-%d): ", *n);
+    scanf("%d", &pos);
+
+    if (pos < 1 || pos > *n) {
+        printf("Invalid position!\n");
+        return;
+    }
+
+    for (int i = pos - 1; i < *n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+    (*n)--;
+}
+
+void delete_num(int a[], int *n) {
+    int x, found = -1;
+    printf("Enter the element: ");
+    scanf("%d", &x);
+
+    for (int i = 0; i < *n; i++) {
+        if (a[i] == x) {
+            found = i;
+            break;
+        }
+    }
+
+    if (found == -1) {
+        printf("Element not found!\n");
+        return;
+    }
+
+    for (int i = found; i < *n - 1; i++) {
+        a[i] = a[i + 1];
+    }
+    (*n)--;
+}
+
+void linear_search(int a[], int n) {
+    int x, found = 0;
+    printf("Enter the element to find: ");
+    scanf("%d", &x);
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] == x) {
+            printf("Element found at index a[%d]\n", i);
+            found = 1;
+        }
+    }
+    if (!found) {
+        printf("Element not found!\n");
+    }
+}
+
+int main() {
+    int a[100], n, i, op;
+    printf("Enter the size of array: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("Enter a[%d]: ", i);
+        scanf("%d", &a[i]);
+    }
+
+    do {
+        printf("\n========= MENU =========");
+        printf("\n1. Traverse");
+        printf("\n2. Insert at End");
+        printf("\n3. Insert at Beginning");
+        printf("\n4. Insert at Any Position");
+        printf("\n5. Delete at Any Position");
+        printf("\n6. Delete at Beginning");
+        printf("\n7. Delete by Value");
+        printf("\n8. Delete at End");
+        printf("\n9. Linear Search");
+        printf("\n10. Exit");
+        printf("\nChoose option: ");
+        scanf("%d", &op);
+
+        switch (op) {
+            case 1: traverse(a, n); break;
+            case 2: insert_end(a, &n); break;
+            case 3: insert_beg(a, &n); break;
+            case 4: insert_any(a, &n); break;
+            case 5: delete_any(a, &n); break;
+            case 6: delete_beg(a, &n); break;
+            case 7: delete_num(a, &n); break;
+            case 8: delete_end(a, &n); break;
+            case 9: linear_search(a, n); break;
+            case 10: printf("Exiting program...\n"); break;
+            default: printf("Invalid choice!\n");
+        }
+    } while (op != 10);
+
+    return 0;
+}
