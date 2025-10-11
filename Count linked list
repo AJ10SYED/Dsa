@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node*next;
+};
+int main()
+{
+    struct node *head=NULL,*temp=NULL, *newnode=NULL;
+    int i,n,data;
+    printf("enter the no of nodes");
+    scanf("%d",&n);
+    if(n<=0)
+    {
+    printf("invalid input");
+    return 0;
+    }
+    head=(struct node*)malloc(sizeof (struct node));
+    head->data=4;
+    head->next=NULL;
+    temp=head;
+    for(i=2;i<=n;i++)
+    {
+        newnode=(struct node*)malloc(sizeof(struct node));
+        printf("enter data for node %d",i);
+        scanf("%d",&data);
+        newnode->data=data;
+        newnode->next=NULL;
+        temp->next=newnode;
+        temp=newnode;
+    }
+    printf("contents of linked list\n");
+    traverselist(head);
+    
+    
+}
+void traverselist(struct node *head)
+{
+    int count=0;
+    if(head==NULL)
+    printf("empty");
+    struct node*temp=NULL;
+    temp=head;
+    while(temp!=NULL)
+    {count++;
+    printf("no of nodes:%d\n",count);
+    temp=temp->next;
+}
+}
